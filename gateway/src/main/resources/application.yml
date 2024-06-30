@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: microservice-one
+          uri: lb://MICROSERVICE-ONE
+          predicates:
+            - Path=/one/**
+        - id: microservice-three
+          uri: lb://MICROSERVICE-THREE
+          predicates:
+            - Path=/three/**
+      default-filters:
+        - RewritePath=/service/(?<segment>.*), /$\{segment}
+
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://localhost:8761/eureka/
+      instance:
+        prefer-ip-address: true

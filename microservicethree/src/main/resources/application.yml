@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: microservice-three
+  config:
+    import: "configserver:"  # 从配置中心获取配置
+  cloud:
+    config:
+      discovery:
+        enabled: true   # 启用基于服务发现的配置中心查找
+        service-id: CONFIG-SERVER   # 配置中心服务在服务注册中心中的名称
+resilience4j:
+  circuitbreaker:
+    instances:
+      microserviceThree:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  retry:
+    instances:
+      microserviceThree:
+        maxAttempts: 3
+        waitDuration: 500
+  timelimiter:
+    instances:
+      microserviceThree:
+        timeoutDuration: 2s
+  zipkin:
+    baseUrl: http://150.158.80.188:9411
+

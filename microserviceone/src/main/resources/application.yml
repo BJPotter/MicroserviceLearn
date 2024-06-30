@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: microservice-one
+  config:
+    import: "configserver:"  # 从配置中心获取配置
+  cloud:
+    config:
+      discovery:
+        enabled: true   # 启用基于服务发现的配置中心查找
+        service-id: CONFIG-SERVER   # 配置中心服务在服务注册中心中的名称
+  zipkin:
+    baseUrl: http://150.158.80.188:9411
+  rabbitmq:
+    host: 150.158.80.188
+    port: 5672
+    username: guest
+    password: guest
+
+
+
+
+
+
+
+
